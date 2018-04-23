@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Collection</title>
+
+    {% include 'bootstrap.html' %}
+
+</head>
+<body>
+
+    {% include 'temporary_navbar.html' %}
+    {% include 'messages.html' %}
+
+    <div class="container">
+        <table class="table">
+            <thead class="thead-light">
+            <tr>
+                <th>Data</th>
+                <th>Encode Manually</th>
+                <th>File Upload</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Informal Settlers</td>
+                <td><a><button>Manually Encode</button></a></td>
+                <td>
+                    <form>
+                        <input type="file">
+                        <input type="submit">
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>Health Care Waste Management</td>
+                <td><a><button>Manually Encode</button></a></td>
+                <td>
+                    <form>
+                        <input type="file">
+                        <input type="submit">
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>Unemployment Rate</td>
+                <td><a><button>Manually Encode</button></a></td>
+                <td>
+                    <form>
+                        <input type="file">
+                        <input type="submit">
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

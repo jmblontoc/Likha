@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Encode Nutritional Statuses</title>
+
+    {% load static %}
+    {% include 'bootstrap.html' %}
+
+    <link rel="{% static 'css/input-ns.css' %}">
+
+</head>
+<body>
+    {% include 'temporary_navbar.html' %}
+    {% include 'messages.html' %}
+
+    <div class="container">
+        <h1>Encode Nutritional Statuses</h1>
+{#        <form method="POST"  action="{% url 'data-collection:store-ns' %}">#}
+{#            {% csrf_token %}#}
+{##}
+{#            <div class="form-group">#}
+{#                <div class="form-group mt-5">#}
+{#                    {% for nutritional_status in nutritional_statuses %}#}
+{#                        <h3 class="mt-5">{{ nutritional_status.name }}</h3>#}
+{#                        {% for age_group in age_groups %}#}
+{#                            <label>{{ age_group.name }} - {{ age_group.sex }}</label>#}
+{#                            <input type="number" class="form-control"#}
+{#                                   name="{{ nutritional_status.code }}-{{ age_group.code }}-{{ age_group.sex }}">#}
+{#                        {% endfor %}#}
+{#                    {% endfor %}#}
+{##}
+{#                    <button type="submit" class="btn btn-primary mt-3 btn-block">Submit</button>#}
+{#                </div>#}
+{#            </div>#}
+{#        </form>#}
+
+        <form method="POST" action="{% url 'data-collection:store-ns' %}">
+            {% csrf_token %}
+            <table class="table">
+                <tr>
+                    <td>-</td>
+                {% for x in age_groups %}
+                    <td>{{ x.name }} - {{ x.sex }}</td>
+                {% endfor %}
+                </tr>
+
+                {% for x in nutritional_statuses %}
+                    <tr>
+                        <td>{{ x.name }}</td>
+                        {% for y in age_groups %}
+                            <td>
+                                <div class="form-group">
+                                    <input class="form-control" type="number" minlength="0" name="{{ x.code }}-{{ y.code }}-{{ y.sex }}">
+                                </div>
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+            <button type="submit" class="btn btn-block btn-primary mb-5">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
