@@ -127,7 +127,31 @@ def store_child_care(request):
 
     age_groups = AgeGroup.objects.all()
 
+    instance_list = []
 
+    for age_group in age_groups:
+        instance_list.append({
+            age_group.code + "-" + age_group.sex: ChildCare(fhsis=fhsis, age_group=age_group)
+        })
+
+    for key, value in request.POST.items():
+
+        if key != 'csrfmiddlewaretoken':
+            splits = str(key).split("-")
+
+            code = splits[0] + "-" + splits[2]
+            field = splits[1]
+
+            for instance in instance_list:
+                k = list(instance.keys())[0]
+                v = instance.get(code)
+
+                if k == code:
+                    setattr(v, field, value)
+                    v.save()
+
+    messages.success(request, "Child care successfully encoded!")
+    return redirect('data-collection:fhsis')
 
 
 @login_required
