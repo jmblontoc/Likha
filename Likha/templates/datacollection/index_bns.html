@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Collection</title>
+
+    {% include 'bootstrap.html' %}
+
+</head>
+<body>
+
+    {% include 'temporary_navbar.html' %}
+    {% include 'messages.html' %}
+
+    <div class="container">
+        <a href="{% url 'data-collection:nutritional-status' %}">Nutritional Statuses</a>
+        <a href="{% url 'data-collection:fhsis' %}">FHSIS</a>
+    </div>
+</body>
+</html>

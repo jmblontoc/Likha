@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FHSIS</title>
+    {% load static %}
+
+    {% include 'bootstrap.html' %}
+</head>
+<body>
+
+    {% include 'messages.html' %}
+    {% include 'temporary_navbar.html' %}
+    <div class="container">
+        <h1>FHSIS</h1>
+        <p>Status: TODO</p>
+
+        <a href="{% url 'data-collection:create-fhsis' %}">Create FHSIS</a>
+
+        <!-- TODO -->
+        <p>Upload File</p>
+        <h3>Input Data</h3>
+        <table class="table">
+            <tr>
+                <th>Data</th>
+                <th>Action</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>Maternal Care</td>
+                <td>
+                    <a>
+                        <button class="btn btn-primary">Encode</button>
+                    </a>
+                </td>
+                <td>TODO</td>
+            </tr>
+            <tr>
+                <td>Immunization</td>
+                <td>
+                    <a>
+                        <button class="btn btn-primary">Encode</button>
+                    </a>
+                </td>
+                <td>TODO</td>
+            </tr>
+            <tr>
+                <td>Malaria</td>
+                <td>
+                    <a>
+                        <button class="btn btn-primary">Encode</button>
+                    </a>
+                </td>
+                <td>TODO</td>
+            </tr>
+            <tr>
+                <td>Tuberculosis</td>
+                <td>
+                    <a>
+                        <button class="btn btn-primary">Encode</button>
+                    </a>
+                </td>
+                <td>TODO</td>
+            </tr>
+            <tr>
+                <td>Schistosomiasis</td>
+                <td>
+                    <a>
+                        <button class="btn btn-primary">Encode</button>
+                    </a>
+                </td>
+                <td>TODO</td>
+            </tr>
+            <tr>
+                <td>Flariasis</td>
+                <td>
+                    <a>
+                        <button class="btn btn-primary">Encode</button>
+                    </a>
+                </td>
+                <td>TODO</td>
+            </tr>
+            <tr>
+                <td>Leprosy</td>
+                <td>
+                    <a>
+                        <button class="btn btn-primary">Encode</button>
+                    </a>
+                </td>
+                <td>TODO</td>
+            </tr>
+            <tr>
+                <td>Child Care</td>
+                <td>
+                    <a href="{% url 'data-collection:encode-cc' %}">
+                        <button class="btn btn-primary">Encode</button>
+                    </a>
+                </td>
+                <td>TODO</td>
+            </tr>
+            <tr>
+                <td>STI Surveillance</td>
+                <td>
+                    <a>
+                        <button class="btn btn-primary">Encode</button>
+                    </a>
+                </td>
+                <td>TODO</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

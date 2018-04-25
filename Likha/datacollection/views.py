@@ -1,20 +1,32 @@
+import datetime
+from datetime import datetime as dt
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from . models import NutritionalStatus, AgeGroup, Barangay, OperationTimbang, OPTValues
-from helpers import global_user
+from .models import NutritionalStatus, AgeGroup, Barangay, OperationTimbang, OPTValues, ChildCare, FHSIS
+from helpers import global_user, checkers
 
 
 # Create your views here.
 @login_required
 def index_bns(request):
-    return render(request, 'datacollection/index-bns.html', None)
+    return render(request, 'datacollection/index_bns.html', None)
 
 
 @login_required
 def nutritionist_data_input(request):
     return render(request, 'datacollection/nutritionists-data-input.html', None)
+
+
+@login_required
+def nutritional_status(request):
+    return render(request, 'datacollection/ns_index.html', None)
+
+
+@login_required
+def fhsis_index(request):
+    return render(request, 'datacollection/fhsis_index.html', None)
 
 
 # manually encode views here
@@ -35,39 +47,41 @@ def encode_nutritional_statuses(request):
 
 
 # Child Care encode
+@login_required
 def encode_child_care(request):
 
     age_groups = AgeGroup.objects.all()
+    fields = ChildCare._meta.fields
+
+    final_fields = []
+
+    for field in fields:
+        if field.verbose_name == 'ID' or field.verbose_name == 'fhsis' or field.verbose_name == 'age group':
+            continue
+
+        splits = str(field).split(".")
+        actual_field = splits[2]
+
+        final_fields.append({
+            'field': field,
+            'string': actual_field
+        })
+
+    context = {
+        'age_groups': age_groups,
+        'fields': final_fields
+    }
+
+    return render(request, 'datacollection/fhsis_data_input.html', context)
 
 
 # VIEWS that store the data to the DB
 @login_required
 def store_nutritional_statuses(request):
 
-    counter = 0
-
-    # data validation! sorry for the long code HAHAHAHA
-    for key, value in request.POST.items():
-        if key == 'barangay' or key == 'csrfmiddlewaretoken':
-            continue
-
-        if value == '':
-            counter = counter + 1
-        else:
-            if float(value) < 0:
-                counter = counter + 1
-            if 'e' in value:
-                counter = counter + 1
-
-    if counter > 0:
+    if checkers.validate_fields(request) > 0:
         messages.error(request, 'Please fill up all fields or enter valid inputs only')
-        print('waaah')
         return redirect('data-collection:encode-ns')
-
-    # store values in DB
-
-    # barangay_post = request.POST.get('barangay')
-    # barangay = Barangay.objects.get(name=barangay_post)
 
     current_user = global_user.get_user(request.user.username)
     barangay = current_user.barangay
@@ -98,3 +112,35 @@ def store_nutritional_statuses(request):
 
     messages.success(request, 'Nutritional statuses successfully encoded!')
     return redirect('data-collection:index')
+
+
+@login_required
+def store_child_care(request):
+
+    if checkers.validate_fields(request) > 0:
+        messages.error(request, "Please fill up all fields of enter valid inputs only")
+        return redirect('data-collection:encode-cc')
+
+    month = datetime.datetime.now().month
+    year = datetime.datetime.now().year
+    fhsis = FHSIS.objects.get(date__month=month, date__year=year)
+
+    age_groups = AgeGroup.objects.all()
+
+
+
+
+@login_required
+def create_fhsis(request):
+
+    user = global_user.get_user(request.user.username)
+
+    FHSIS.objects.create(
+        barangay=user.barangay
+    )
+
+    month = datetime.datetime.now().strftime("%B")
+
+    messages.success(request, "FHSIS generated for " + str(month))
+    return redirect('data-collection:fhsis')
+

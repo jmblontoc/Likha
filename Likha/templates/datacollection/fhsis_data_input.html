@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Input</title>
+
+    {% load static %}
+
+    {% include 'bootstrap.html' %}
+
+</head>
+<body>
+    {% include 'temporary_navbar.html' %}
+    {% include 'messages.html' %}
+
+    <div class="container">
+        <h1>Encode _____</h1>
+
+        <form method="POST" action="{% url 'data-collection:store-cc' %}">
+            {% csrf_token %}
+            <table class="table">
+                <tr>
+                    <td>-</td>
+
+                {% for x in age_groups %}
+                    <td>{{ x.name }} - {{ x.sex }}</td>
+                {% endfor %}
+                </tr>
+
+            {% for x in fields %}
+                <tr>
+                    <td>{{ x.field.verbose_name }}</td>
+                    {% for y in age_groups %}
+                        <td>
+                            <div class="form-group">
+                                <input class="form-control" type="number" minlength="0"
+                                 name="{{ y.code }}-{{ x.string }}-{{ y.sex }}">
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </table>
+            <button type="submit" class="btn btn-block btn-primary mb-5">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

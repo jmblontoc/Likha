@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nutritional Statuses</title>
+    {% load static %}
+
+    {% include 'bootstrap.html' %}
+</head>
+<body>
+
+    {% include 'messages.html' %}
+    {% include 'temporary_navbar.html' %}
+    <div class="container">
+        <h1>Nutritional Statuses</h1>
+        <p>Status: TODO</p>
+        <a href="{% url 'data-collection:encode-ns' %}">Encode Manually</a>
+        <a>Upload File</a>
+    </div>
+</body>
+</html>
