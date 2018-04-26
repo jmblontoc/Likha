@@ -4,8 +4,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .models import NutritionalStatus, AgeGroup, Barangay, OperationTimbang, OPTValues, ChildCare, FHSIS
-from helpers import global_user, checkers
+from .models import NutritionalStatus, AgeGroup, Barangay, OperationTimbang, OPTValues, ChildCare, FHSIS, Immunization, \
+    Tuberculosis, Malaria, Flariasis, Leprosy, Schistosomiasis
+from helpers import global_user, checkers, functions
 
 
 # Create your views here.
@@ -50,29 +51,49 @@ def encode_nutritional_statuses(request):
 @login_required
 def encode_child_care(request):
 
-    age_groups = AgeGroup.objects.all()
-    fields = ChildCare._meta.fields
+    return functions.encode_fhsis(request, ChildCare, 'data-collection:store-cc', "Child Care")
 
-    final_fields = []
 
-    for field in fields:
-        if field.verbose_name == 'ID' or field.verbose_name == 'fhsis' or field.verbose_name == 'age group':
-            continue
+# encode Immunization
+@login_required
+def encode_immunization(request):
 
-        splits = str(field).split(".")
-        actual_field = splits[2]
+    return functions.encode_fhsis(request, Immunization, 'data-collection:store-immunization', "Immunization")
 
-        final_fields.append({
-            'field': field,
-            'string': actual_field
-        })
 
-    context = {
-        'age_groups': age_groups,
-        'fields': final_fields
-    }
+# encode Flariasis
+@login_required
+def encode_flariasis(request):
 
-    return render(request, 'datacollection/fhsis_data_input.html', context)
+    return functions.encode_fhsis(request, Flariasis, 'data-collection:store-flariasis', "Flariasis")
+
+
+# encode Leprosy
+@login_required
+def encode_leprosy(request):
+
+    return functions.encode_fhsis(request, Leprosy, 'data-collection:store-leprosy', "Leprosy")
+
+
+# encode Schistosomiasis
+@login_required
+def encode_schistosomiasis(request):
+
+    return functions.encode_fhsis(request, Schistosomiasis, 'data-collection:store-schistosomiasis', "Schistosomiasis")
+
+
+# encode Tuberculosis
+@login_required
+def encode_tuberculosis(request):
+
+    return functions.encode_fhsis(request, Tuberculosis, 'data-collection:store-tb', "Tuberculosis")
+
+
+# encode Malaria
+@login_required
+def encode_malaria(request):
+
+    return functions.encode_fhsis(request, Malaria, 'data-collection:store-malaria', "Malaria")
 
 
 # VIEWS that store the data to the DB
@@ -117,41 +138,57 @@ def store_nutritional_statuses(request):
 @login_required
 def store_child_care(request):
 
-    if checkers.validate_fields(request) > 0:
-        messages.error(request, "Please fill up all fields of enter valid inputs only")
-        return redirect('data-collection:encode-cc')
+    url = 'data-collection:encode-cc'
 
-    month = datetime.datetime.now().month
-    year = datetime.datetime.now().year
-    fhsis = FHSIS.objects.get(date__month=month, date__year=year)
+    return functions.fhsis_input(request, url, ChildCare, "Child Care")
 
-    age_groups = AgeGroup.objects.all()
 
-    instance_list = []
+@login_required
+def store_immunization(request):
 
-    for age_group in age_groups:
-        instance_list.append({
-            age_group.code + "-" + age_group.sex: ChildCare(fhsis=fhsis, age_group=age_group)
-        })
+    url = 'data-collection:encode-immunization'
 
-    for key, value in request.POST.items():
+    return functions.fhsis_input(request, url, Immunization, "Immmunization")
 
-        if key != 'csrfmiddlewaretoken':
-            splits = str(key).split("-")
 
-            code = splits[0] + "-" + splits[2]
-            field = splits[1]
+@login_required
+def store_tuberculosis(request):
 
-            for instance in instance_list:
-                k = list(instance.keys())[0]
-                v = instance.get(code)
+    url = 'data-collection:encode-tb'
 
-                if k == code:
-                    setattr(v, field, value)
-                    v.save()
+    return functions.fhsis_input(request, url, Tuberculosis, "Tuberculosis")
 
-    messages.success(request, "Child care successfully encoded!")
-    return redirect('data-collection:fhsis')
+
+@login_required
+def store_malaria(request):
+
+    url = 'data-collection:encode-malaria'
+
+    return functions.fhsis_input(request, url, Malaria, "Malaria")
+
+
+@login_required
+def store_flariasis(request):
+
+    url = 'data-collection:encode-flariasis'
+
+    return functions.fhsis_input(request, url, Flariasis, "Flariasis")
+
+
+@login_required
+def store_leprosy(request):
+
+    url = 'data-collection:encode-leprosy'
+
+    return functions.fhsis_input(request, url, Leprosy, "Leprosy")
+
+
+@login_required
+def store_schistosomiasis(request):
+
+    url = 'data-collection:encode-schistosomiasis'
+
+    return functions.fhsis_input(request, url, Schistosomiasis, "Schistosomiasis")
 
 
 @login_required

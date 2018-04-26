@@ -26,6 +26,31 @@ urlpatterns = [
     # encode Child Care
     path('input/child-care', views.encode_child_care, name='encode-cc'),
     # put child care to db
-    path('store/child-care', views.store_child_care, name='store-cc')
+    path('store/child-care', views.store_child_care, name='store-cc'),
+
+    # encode Immunization
+    path('input/immunization', views.encode_immunization, name='encode-immunization'),
+    # put immunization to db
+    path('store/immunization', views.store_immunization, name='store-immunization'),
+
+    # encode TB
+    path('input/tuberculosis', views.encode_tuberculosis, name='encode-tb'),
+    path('store/tuberculosis', views.store_tuberculosis, name='store-tb'),
+
+    # encode malaria
+    path('input/malaria', views.encode_malaria, name='encode-malaria'),
+    path('store/malaria', views.store_malaria, name='store-malaria'),
+
+    # encode flariasis
+    path('input/flariasis', views.encode_flariasis, name='encode-flariasis'),
+    path('store/flariasis', views.store_flariasis, name='store-flariasis'),
+
+    # encode schistosomiasis
+    path('input/schistosomiasis', views.encode_schistosomiasis, name='encode-schistosomiasis'),
+    path('store/schistosomiasis', views.store_schistosomiasis, name='store-schistosomiasis'),
+
+    # encode leprosy
+    path('input/leprosy', views.encode_leprosy, name='encode-leprosy'),
+    path('store/leprosy', views.store_leprosy, name='store-leprosy'),
 ]
 

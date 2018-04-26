@@ -14,9 +14,9 @@
     {% include 'messages.html' %}
 
     <div class="container">
-        <h1>Encode _____</h1>
+        <h1>Encode {{ data }}</h1>
 
-        <form method="POST" action="{% url 'data-collection:store-cc' %}">
+        <form method="POST" action="{{ url }}">
             {% csrf_token %}
             <table class="table">
                 <tr>
@@ -34,7 +34,7 @@
                         <td>
                             <div class="form-group">
                                 <input class="form-control" type="number" minlength="0"
-                                 name="{{ y.code }}-{{ x.string }}-{{ y.sex }}">
+                                 name="{{ y.code }}-{{ x.string }}-{{ y.sex }}" step="0.01">
                             </div>
                         </td>
                     {% endfor %}
