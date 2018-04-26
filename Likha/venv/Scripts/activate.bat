@@ -1,5 +1,5 @@
 @echo off
-set "VIRTUAL_ENV=C:\Users\jmlon\Documents\Likha\venv"
+set "VIRTUAL_ENV=C:\Users\jmlon\Documents\GitHub\Likha\Likha\venv"
 
 if defined _OLD_VIRTUAL_PROMPT (
     set "PROMPT=%_OLD_VIRTUAL_PROMPT%"

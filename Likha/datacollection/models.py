@@ -113,12 +113,12 @@ class Immunization(models.Model):
 
     fhsis = models.ForeignKey(FHSIS, on_delete=models.CASCADE)
 
-    immunization_given = models.DecimalField(max_digits=4, decimal_places=2)
-    fully_immunized_children = models.DecimalField(max_digits=4, decimal_places=2)
+    immunization_given = models.DecimalField(max_digits=4, decimal_places=2, null=True)
+    fully_immunized_children = models.DecimalField(max_digits=4, decimal_places=2, null=True)
 
     # child protected at birth
-    child_protected = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Child protected at birth")
-    infant_breastfed_until_6th_month = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Infant exclusively breastfed until 6th month")
+    child_protected = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Child protected at birth", null=True)
+    infant_breastfed_until_6th_month = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Infant exclusively breastfed until 6th month", null=True)
 
     age_group = models.ForeignKey(AgeGroup, on_delete=models.CASCADE)
 
@@ -132,10 +132,10 @@ class Malaria(models.Model):
 
     fhsis = models.ForeignKey(FHSIS, on_delete=models.CASCADE)
 
-    population_at_risk = models.DecimalField(max_digits=4, decimal_places=2)
-    confirmed_malaria_cases = models.DecimalField(max_digits=4, decimal_places=2)
-    malarial_deaths = models.DecimalField(max_digits=4, decimal_places=2)
-    llin_given = models.DecimalField(max_digits=4, decimal_places=2)
+    population_at_risk = models.DecimalField(max_digits=4, decimal_places=2, null=True)
+    confirmed_malaria_cases = models.DecimalField(max_digits=4, decimal_places=2, null=True)
+    malarial_deaths = models.DecimalField(max_digits=4, decimal_places=2, null=True)
+    llin_given = models.DecimalField(max_digits=4, decimal_places=2, null=True)
 
     age_group = models.ForeignKey(AgeGroup, on_delete=models.CASCADE)
 
@@ -149,11 +149,11 @@ class Tuberculosis(models.Model):
 
     fhsis = models.ForeignKey(FHSIS, on_delete=models.CASCADE)
 
-    underwent_DDSM = models.DecimalField(max_digits=4, decimal_places=2)
-    smear_discovered = models.DecimalField(max_digits=4, decimal_places=2)
-    smear_cured = models.DecimalField(max_digits=4, decimal_places=2)
-    case_detection_rate = models.DecimalField(max_digits=4, decimal_places=2)
-    all_forms_identified = models.DecimalField(max_digits=4, decimal_places=2)
+    underwent_DDSM = models.DecimalField(max_digits=4, decimal_places=2, null=True)
+    smear_discovered = models.DecimalField(max_digits=4, decimal_places=2, null=True)
+    smear_cured = models.DecimalField(max_digits=4, decimal_places=2, null=True)
+    case_detection_rate = models.DecimalField(max_digits=4, decimal_places=2, null=True)
+    all_forms_identified = models.DecimalField(max_digits=4, decimal_places=2, null=True)
 
     age_group = models.ForeignKey(AgeGroup, on_delete=models.CASCADE)
 
@@ -167,8 +167,8 @@ class Schistosomiasis(models.Model):
 
     fhsis = models.ForeignKey(FHSIS, on_delete=models.CASCADE)
 
-    cases_treated = models.DecimalField(max_digits=4, decimal_places=2)
-    positive_cases = models.DecimalField(max_digits=4, decimal_places=2)
+    cases_treated = models.DecimalField(max_digits=4, decimal_places=2, null=True)
+    positive_cases = models.DecimalField(max_digits=4, decimal_places=2, null=True)
 
     age_group = models.ForeignKey(AgeGroup, on_delete=models.CASCADE)
 
@@ -183,10 +183,10 @@ class Flariasis(models.Model):
     fhsis = models.ForeignKey(FHSIS, on_delete=models.CASCADE)
     age_group = models.ForeignKey(AgeGroup, on_delete=models.CASCADE)
 
-    cases = models.DecimalField(max_digits=4, decimal_places=2)
-    clinical_rate = models.DecimalField(max_digits=4, decimal_places=2)
-    mfd = models.DecimalField(max_digits=4, decimal_places=2)
-    given_mda = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Number of people given MDA")
+    cases = models.DecimalField(max_digits=4, decimal_places=2, null=True)
+    clinical_rate = models.DecimalField(max_digits=4, decimal_places=2, null=True)
+    mfd = models.DecimalField(max_digits=4, decimal_places=2, null=True)
+    given_mda = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Number of people given MDA", null=True)
 
     def __str__(self):
         return "Flariasis data for " + self.fhsis.barangay.name + " - " + str(self.fhsis.date) + " | " + \
@@ -199,8 +199,8 @@ class Leprosy(models.Model):
     fhsis = models.ForeignKey(FHSIS, on_delete=models.CASCADE)
     age_group = models.ForeignKey(AgeGroup, on_delete=models.CASCADE)
 
-    cases = models.DecimalField(max_digits=4, decimal_places=2)
-    cases_cured = models.DecimalField(max_digits=4, decimal_places=2)
+    cases = models.DecimalField(max_digits=4, decimal_places=2, null=True)
+    cases_cured = models.DecimalField(max_digits=4, decimal_places=2, null=True)
 
     def __str__(self):
         return "Leprosy data for " + self.fhsis.barangay.name + " - " + str(self.fhsis.date) + " | " + \
