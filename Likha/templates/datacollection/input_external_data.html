@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Input External Data</title>
+
+    {% load static %}
+
+    {% include 'bootstrap.html' %}
+
+</head>
+<body>
+
+    {% include 'messages.html' %}
+    {% include 'temporary_navbar.html' %}
+
+    <div class="container">
+        <h1>Input External Data</h1>
+
+        <table class="table">
+            <tr>
+                <th>Data</th>
+                <th>Action</th>
+                <th>Status</th>
+            </tr>
+
+            <tr>
+                <td>Health Care Waste Management</td>
+                <td>
+                    <a href="{% url 'data-collection:encode-healthcare' %}">
+                        <button class="btn btn-primary">Encode</button>
+                    </a>
+                </td>
+                <td>TODO</td>
+            </tr>
+
+            <tr>
+                <td>Informal Settlers</td>
+                <td>
+                    <a href="{% url 'data-collection:encode-informal-settlers' %}">
+                        <button class="btn btn-primary">Encode</button>
+                    </a>
+                </td>
+                <td>TODO</td>
+            </tr>
+
+            <tr>
+                <td>Unemployment Rate</td>
+                <td>
+                    <a href="{% url 'data-collection:encode-ur' %}">
+                        <button class="btn btn-primary">Encode</button>
+                    </a>
+                </td>
+                <td>TODO</td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>

@@ -12,7 +12,7 @@ def redirect_to(user):
         print(profile.user_type)
         return redirect('data-collection:index')
     elif profile.user_type == 'Nutritionist':
-        return HttpResponse("Nutritionist")
+        return redirect('core:nutritionist')
     elif profile.user_type == 'Nutrition Program Coordinator':
         pass
     else:

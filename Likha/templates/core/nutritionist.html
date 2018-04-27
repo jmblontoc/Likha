@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nutritionist</title>
+
+    {% load static %}
+
+    {% include 'bootstrap.html' %}
+</head>
+<body>
+
+    {% include 'messages.html' %}
+    {% include 'temporary_navbar.html' %}
+
+    <div class="container">
+        <h1>Nutritionist View</h1>
+
+        <a href="{% url 'data-collection:input-external' %}">Data Input</a>
+    </div>
+</body>
+</html>

@@ -52,5 +52,27 @@ urlpatterns = [
     # encode leprosy
     path('input/leprosy', views.encode_leprosy, name='encode-leprosy'),
     path('store/leprosy', views.store_leprosy, name='store-leprosy'),
+
+    # maternal
+    path('input/maternal', views.encode_maternal, name='encode-maternal'),
+
+    # sti surveillance
+    path('input/sti_surveillance', views.encode_sti_surveillance, name='encode-sti'),
+
+    # EXTERNAL DATA
+
+    # external data input
+    path('external_data/', views.input_external_data, name='input-external'),
+
+    # input health care waste management
+    path('external_data/hcwm/input/', views.encode_health_care_waste_management, name='encode-healthcare'),
+
+    # informal settlers
+    path('external_data/informal_settlers/input', views.encode_informal_settlers, name='encode-informal-settlers'),
+
+    # unemployment rate
+    path('external_data/unemployment_rate/input', views.encode_unemployment_rate, name='encode-ur'),
+
+
 ]
 

@@ -4,6 +4,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+
+from datacollection.forms import MaternalForm, STISurveillanceForm, HealthCareWasteManagementForm, InformalSettlersForm, \
+    UnemploymentRateForm
 from .models import NutritionalStatus, AgeGroup, Barangay, OperationTimbang, OPTValues, ChildCare, FHSIS, Immunization, \
     Tuberculosis, Malaria, Flariasis, Leprosy, Schistosomiasis
 from helpers import global_user, checkers, functions
@@ -205,3 +208,46 @@ def create_fhsis(request):
     messages.success(request, "FHSIS generated for " + str(month))
     return redirect('data-collection:fhsis')
 
+
+# STI Surveillance and Maternal
+
+@login_required
+def encode_maternal(request):
+
+    return functions.input_fhsis(request, MaternalForm, "Maternal")
+
+
+@login_required
+def encode_sti_surveillance(request):
+
+    return functions.input_fhsis(request, STISurveillanceForm, "STI Surveillance")
+
+
+# EXTERNAL DATA INPUT BY NUTRITIONISTS
+
+@login_required
+def input_external_data(request):
+
+    context = {
+
+    }
+
+    return render(request, 'datacollection/input_external_data.html', context)
+
+
+@login_required
+def encode_health_care_waste_management(request):
+
+    return functions.input_external_data(request, HealthCareWasteManagementForm, "Health Care Waste Management")
+
+
+@login_required
+def encode_informal_settlers(request):
+
+    return functions.input_external_data(request, InformalSettlersForm, "Informal Settlers")
+
+
+@login_required
+def encode_unemployment_rate(request):
+
+    return functions.input_external_data(request, UnemploymentRateForm, "Unemployment Rate")

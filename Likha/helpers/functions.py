@@ -74,3 +74,50 @@ def encode_fhsis(request, model, url, data):
     }
 
     return render(request, 'datacollection/fhsis_data_input.html', context)
+
+
+def input_fhsis(request, form, source):
+
+    f = form(request.POST or None)
+
+    month = datetime.datetime.now().month
+    year = datetime.datetime.now().year
+
+    fhsis = FHSIS.objects.get(date__year=year, date__month=month)
+
+    if f.is_valid():
+
+        data = f.save(commit=False)
+        data.fhsis = fhsis
+        data.save()
+
+        messages.success(request, source + " data encoded successfully")
+        return redirect('data-collection:fhsis')
+
+    context = {
+        'form': f,
+        'data': source
+    }
+
+    return render(request, 'datacollection/encode_fhsis.html', context)
+
+
+def input_external_data(request, form, source):
+
+    f = form(request.POST or None)
+
+    if f.is_valid():
+
+        data = f.save(commit=False)
+        data.save()
+
+        messages.success(request, source + " data has been successfully encoded!")
+        return redirect('data-collection:input-external')
+
+    context = {
+        'form': f,
+        'data': source
+    }
+
+    return render(request, 'datacollection/encode_external_data.html', context)
+

@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from helpers import user_redirects
 
@@ -37,3 +38,13 @@ def logout_view(request):
         logout(request)
 
     return redirect('core:login')
+
+
+@login_required
+def nutritionist(request):
+
+    context = {
+
+    }
+
+    return render(request, 'core/nutritionist.html', context)
