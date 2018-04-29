@@ -13,101 +13,190 @@
     {% include 'temporary_navbar.html' %}
     <div class="container">
         <h1>FHSIS</h1>
-        <p>Status: TODO</p>
+        {% if has_fhsis %}
+             <p>Status:
+                <span class="text-success">FHSIS already created</span>
+             </p>
 
-        <a href="{% url 'data-collection:create-fhsis' %}">Create FHSIS</a>
+            <p>Upload File</p>
+            <h3>Input Data</h3>
+            <table class="table">
+                <tr>
+                    <th>Data</th>
+                    <th>Action</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <td>Maternal Care</td>
+                    {% if has_maternal %}
+                        <td>
+                            <a href="{% url 'data-collection:encode-maternal' %}">
+                                <button class="btn btn-primary disabled" disabled>Encode</button>
+                            </a>
+                        </td>
+                        <td class="text-success">Already encoded for this month</td>
+                    {% else %}
+                        <td>
+                            <a href="{% url 'data-collection:encode-maternal' %}">
+                                <button class="btn btn-primary">Encode</button>
+                            </a>
+                        </td>
+                        <td class="text-warning">Not yet encoded</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>Immunization</td>
+                    {% if has_immunization %}
+                        <td>
+                            <a href="{% url 'data-collection:encode-immunization' %}">
+                                <button class="btn btn-primary disabled" disabled>Encode</button>
+                            </a>
+                        </td>
+                        <td class="text-success">Already encoded for this month</td>
+                    {% else %}
+                        <td>
+                            <a href="{% url 'data-collection:encode-immunization' %}">
+                                <button class="btn btn-primary">Encode</button>
+                            </a>
+                        </td>
+                        <td class="text-warning">Not yet encoded</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>Malaria</td>
+                    {% if has_malaria %}
+                        <td>
+                            <a href="{% url 'data-collection:encode-malaria' %}">
+                                <button class="btn btn-primary disabled" disabled>Encode</button>
+                            </a>
+                        </td>
+                        <td class="text-success">Already encoded for this month</td>
+                    {% else %}
+                        <td>
+                            <a href="{% url 'data-collection:encode-malaria' %}">
+                                <button class="btn btn-primary">Encode</button>
+                            </a>
+                        </td>
+                        <td class="text-warning">Not yet encoded</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>Tuberculosis</td>
+                    {% if has_tb %}
+                        <td>
+                            <a href="{% url 'data-collection:encode-tb' %}">
+                                <button class="btn btn-primary disabled" disabled>Encode</button>
+                            </a>
+                        </td>
+                        <td class="text-success">Already encoded for this month</td>
+                    {% else %}
+                        <td>
+                            <a href="{% url 'data-collection:encode-tb' %}">
+                                <button class="btn btn-primary">Encode</button>
+                            </a>
+                        </td>
+                        <td class="text-warning">Not yet encoded</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>Schistosomiasis</td>
+                    {% if has_schisto %}
+                        <td>
+                            <a href="{% url 'data-collection:encode-schistosomiasis' %}">
+                                <button class="btn btn-primary disabled" disabled>Encode</button>
+                            </a>
+                        </td>
+                        <td class="text-success">Already encoded for this month</td>
+                    {% else %}
+                        <td>
+                            <a href="{% url 'data-collection:encode-schistosomiasis' %}">
+                                <button class="btn btn-primary" >Encode</button>
+                            </a>
+                        </td>
+                        <td class="text-warning">Not yet encoded</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>Flariasis</td>
+                    {% if has_flariasis %}
+                        <td>
+                            <a href="{% url 'data-collection:encode-flariasis' %}">
+                                <button class="btn btn-primary disabled" disabled>Encode</button>
+                            </a>
+                        </td>
+                        <td class="text-success">Already encoded for this month</td>
+                    {% else %}
+                        <td>
+                            <a href="{% url 'data-collection:encode-flariasis' %}">
+                                <button class="btn btn-primary">Encode</button>
+                            </a>
+                        </td>
+                        <td class="text-warning">Not yet encoded</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>Leprosy</td>
+                    {% if has_leprosy %}
+                        <td>
+                            <a href="{% url 'data-collection:encode-leprosy' %}">
+                                <button class="btn btn-primary disabled" disabled>Encode</button>
+                            </a>
+                        </td>
+                        <td class="text-success">Already encoded for this month</td>
+                    {% else %}
+                        <td>
+                            <a href="{% url 'data-collection:encode-leprosy' %}">
+                                <button class="btn btn-primary">Encode</button>
+                            </a>
+                        </td>
+                        <td class="text-warning">Not yet encoded</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>Child Care</td>
+                    {% if has_cc %}
+                        <td>
+                            <a href="{% url 'data-collection:encode-cc' %}">
+                                <button class="btn btn-primary disabled" disabled>Encode</button>
+                            </a>
+                        </td>
+                        <td class="text-success">Already encoded for this month</td>
+                    {% else %}
+                        <td>
+                            <a href="{% url 'data-collection:encode-cc' %}">
+                                <button class="btn btn-primary">Encode</button>
+                            </a>
+                        </td>
+                        <td class="text-warning">Not yet encoded</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>STI Surveillance</td>
+                    {% if has_sti %}
+                        <td>
+                            <a href="{% url 'data-collection:encode-sti' %}">
+                                <button class="btn btn-primary disabled" disabled>Encode</button>
+                            </a>
+                        </td>
+                        <td class="text-success">Already encoded for this month</td>
+                    {% else %}
+                        <td>
+                            <a href="{% url 'data-collection:encode-sti' %}">
+                                <button class="btn btn-primary">Encode</button>
+                            </a>
+                        </td>
+                        <td class="text-warning">Not yet encoded</td>
+                    {% endif %}
+                </tr>
+            </table>
+        {% else %}
+            <p>Status:
+                <span class="text-danger">FHSIS not yet created</span>
+            </p>
+            <a href="{% url 'data-collection:create-fhsis' %}">Create FHSIS</a>
+        {% endif %}
 
         <!-- TODO -->
-        <p>Upload File</p>
-        <h3>Input Data</h3>
-        <table class="table">
-            <tr>
-                <th>Data</th>
-                <th>Action</th>
-                <th>Status</th>
-            </tr>
-            <tr>
-                <td>Maternal Care</td>
-                <td>
-                    <a href="{% url 'data-collection:encode-maternal' %}">
-                        <button class="btn btn-primary">Encode</button>
-                    </a>
-                </td>
-                <td>TODO</td>
-            </tr>
-            <tr>
-                <td>Immunization</td>
-                <td>
-                    <a href="{% url 'data-collection:encode-immunization' %}">
-                        <button class="btn btn-primary">Encode</button>
-                    </a>
-                </td>
-                <td>TODO</td>
-            </tr>
-            <tr>
-                <td>Malaria</td>
-                <td>
-                    <a href="{% url 'data-collection:encode-malaria' %}">
-                        <button class="btn btn-primary">Encode</button>
-                    </a>
-                </td>
-                <td>TODO</td>
-            </tr>
-            <tr>
-                <td>Tuberculosis</td>
-                <td>
-                    <a href="{% url 'data-collection:encode-tb' %}">
-                        <button class="btn btn-primary">Encode</button>
-                    </a>
-                </td>
-                <td>TODO</td>
-            </tr>
-            <tr>
-                <td>Schistosomiasis</td>
-                <td>
-                    <a href="{% url 'data-collection:encode-schistosomiasis' %}">
-                        <button class="btn btn-primary">Encode</button>
-                    </a>
-                </td>
-                <td>TODO</td>
-            </tr>
-            <tr>
-                <td>Flariasis</td>
-                <td>
-                    <a href="{% url 'data-collection:encode-flariasis' %}">
-                        <button class="btn btn-primary">Encode</button>
-                    </a>
-                </td>
-                <td>TODO</td>
-            </tr>
-            <tr>
-                <td>Leprosy</td>
-                <td>
-                    <a href="{% url 'data-collection:encode-leprosy' %}">
-                        <button class="btn btn-primary">Encode</button>
-                    </a>
-                </td>
-                <td>TODO</td>
-            </tr>
-            <tr>
-                <td>Child Care</td>
-                <td>
-                    <a href="{% url 'data-collection:encode-cc' %}">
-                        <button class="btn btn-primary">Encode</button>
-                    </a>
-                </td>
-                <td>TODO</td>
-            </tr>
-            <tr>
-                <td>STI Surveillance</td>
-                <td>
-                    <a href="{% url 'data-collection:encode-sti' %}">
-                        <button class="btn btn-primary">Encode</button>
-                    </a>
-                </td>
-                <td>TODO</td>
-            </tr>
-        </table>
     </div>
 </body>
 </html>

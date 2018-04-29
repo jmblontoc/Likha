@@ -11,9 +11,18 @@
 
     {% include 'messages.html' %}
     {% include 'temporary_navbar.html' %}
+
     <div class="container">
         <h1>Nutritional Statuses</h1>
-        <p>Status: TODO</p>
+
+        <p>Status:
+            {% if has_opt %}
+                <span class="text-success">Already encoded</span>
+            {% else %}
+                <span class="text-warning">Not yet encoded</span>
+            {% endif %}
+        </p>
+
         <a href="{% url 'data-collection:encode-ns' %}">Encode Manually</a>
         <a>Upload File</a>
     </div>

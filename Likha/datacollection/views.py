@@ -2,13 +2,11 @@ import datetime
 from datetime import datetime as dt
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
-
 from datacollection.forms import MaternalForm, STISurveillanceForm, HealthCareWasteManagementForm, InformalSettlersForm, \
     UnemploymentRateForm
 from .models import NutritionalStatus, AgeGroup, Barangay, OperationTimbang, OPTValues, ChildCare, FHSIS, Immunization, \
-    Tuberculosis, Malaria, Flariasis, Leprosy, Schistosomiasis
+    Tuberculosis, Malaria, Flariasis, Leprosy, Schistosomiasis, Maternal, STISurveillance
 from helpers import global_user, checkers, functions
 
 
@@ -25,12 +23,69 @@ def nutritionist_data_input(request):
 
 @login_required
 def nutritional_status(request):
-    return render(request, 'datacollection/ns_index.html', None)
+
+    month = datetime.datetime.now().month
+    year = datetime.datetime.now().year
+    bns = global_user.get_user(request.user.username)
+    barangay = bns.barangay
+
+    try:
+        OperationTimbang.objects.get(date__month=month, date__year=year, barangay=barangay)
+        has_opt = True
+    except OperationTimbang.DoesNotExist:
+        has_opt = False
+
+    print(has_opt)
+
+    context = {
+        'has_opt': has_opt
+    }
+
+    return render(request, 'datacollection/ns_index.html', context)
 
 
 @login_required
 def fhsis_index(request):
-    return render(request, 'datacollection/fhsis_index.html', None)
+
+    month = datetime.datetime.now().month
+    year = datetime.datetime.now().year
+    bns = global_user.get_user(request.user.username)
+    barangay = bns.barangay
+
+    # FHSIS fields
+
+    has_maternal = checkers.check_fhsis(month, year, barangay, Maternal)
+    has_immunization = checkers.check_fhsis(month, year, barangay, Immunization)
+    has_malaria = checkers.check_fhsis(month, year, barangay, Malaria)
+    has_tb = checkers.check_fhsis(month, year, barangay, Tuberculosis)
+    has_schisto = checkers.check_fhsis(month, year, barangay, Schistosomiasis)
+    has_flariasis = checkers.check_fhsis(month, year, barangay, Flariasis)
+    has_leprosy = checkers.check_fhsis(month, year, barangay, Leprosy)
+    has_cc = checkers.check_fhsis(month, year, barangay, ChildCare)
+    has_sti = checkers.check_fhsis(month, year, barangay, STISurveillance)
+
+    try:
+        FHSIS.objects.get(date__month=month, date__year=year, barangay=barangay)
+        has_fhsis = True
+    except FHSIS.DoesNotExist:
+        has_fhsis = False
+
+    print(has_maternal)
+
+    context = {
+        'has_fhsis': has_fhsis,
+        'has_maternal': has_maternal,
+        'has_immunization': has_immunization,
+        'has_malaria': has_malaria,
+        'has_tb': has_tb,
+        'has_schisto': has_schisto,
+        'has_flariasis': has_flariasis,
+        'has_leprosy': has_leprosy,
+        'has_cc': has_cc,
+        'has_sti': has_sti
+    }
+
+    return render(request, 'datacollection/fhsis_index.html', context)
 
 
 # manually encode views here
@@ -143,7 +198,10 @@ def store_child_care(request):
 
     url = 'data-collection:encode-cc'
 
-    return functions.fhsis_input(request, url, ChildCare, "Child Care")
+    bns = global_user.get_user(request.user.username)
+    barangay = bns.barangay
+
+    return functions.fhsis_input(request, url, ChildCare, "Child Care", barangay)
 
 
 @login_required
@@ -151,7 +209,10 @@ def store_immunization(request):
 
     url = 'data-collection:encode-immunization'
 
-    return functions.fhsis_input(request, url, Immunization, "Immmunization")
+    bns = global_user.get_user(request.user.username)
+    barangay = bns.barangay
+
+    return functions.fhsis_input(request, url, Immunization, "Immmunization", barangay)
 
 
 @login_required
@@ -159,7 +220,10 @@ def store_tuberculosis(request):
 
     url = 'data-collection:encode-tb'
 
-    return functions.fhsis_input(request, url, Tuberculosis, "Tuberculosis")
+    bns = global_user.get_user(request.user.username)
+    barangay = bns.barangay
+
+    return functions.fhsis_input(request, url, Tuberculosis, "Tuberculosis", barangay)
 
 
 @login_required
@@ -167,7 +231,10 @@ def store_malaria(request):
 
     url = 'data-collection:encode-malaria'
 
-    return functions.fhsis_input(request, url, Malaria, "Malaria")
+    bns = global_user.get_user(request.user.username)
+    barangay = bns.barangay
+
+    return functions.fhsis_input(request, url, Malaria, "Malaria", barangay)
 
 
 @login_required
@@ -175,7 +242,10 @@ def store_flariasis(request):
 
     url = 'data-collection:encode-flariasis'
 
-    return functions.fhsis_input(request, url, Flariasis, "Flariasis")
+    bns = global_user.get_user(request.user.username)
+    barangay = bns.barangay
+
+    return functions.fhsis_input(request, url, Flariasis, "Flariasis", barangay)
 
 
 @login_required
@@ -183,7 +253,10 @@ def store_leprosy(request):
 
     url = 'data-collection:encode-leprosy'
 
-    return functions.fhsis_input(request, url, Leprosy, "Leprosy")
+    bns = global_user.get_user(request.user.username)
+    barangay = bns.barangay
+
+    return functions.fhsis_input(request, url, Leprosy, "Leprosy", barangay)
 
 
 @login_required
@@ -191,7 +264,10 @@ def store_schistosomiasis(request):
 
     url = 'data-collection:encode-schistosomiasis'
 
-    return functions.fhsis_input(request, url, Schistosomiasis, "Schistosomiasis")
+    bns = global_user.get_user(request.user.username)
+    barangay = bns.barangay
+
+    return functions.fhsis_input(request, url, Schistosomiasis, "Schistosomiasis", barangay)
 
 
 @login_required
@@ -214,13 +290,19 @@ def create_fhsis(request):
 @login_required
 def encode_maternal(request):
 
-    return functions.input_fhsis(request, MaternalForm, "Maternal")
+    bns = global_user.get_user(request.user.username)
+    barangay = bns.barangay
+
+    return functions.input_fhsis(request, MaternalForm, "Maternal", barangay)
 
 
 @login_required
 def encode_sti_surveillance(request):
 
-    return functions.input_fhsis(request, STISurveillanceForm, "STI Surveillance")
+    bns = global_user.get_user(request.user.username)
+    barangay = bns.barangay
+
+    return functions.input_fhsis(request, STISurveillanceForm, "STI Surveillance", barangay)
 
 
 # EXTERNAL DATA INPUT BY NUTRITIONISTS

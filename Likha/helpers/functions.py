@@ -8,7 +8,7 @@ from datacollection.models import FHSIS, AgeGroup
 from helpers import checkers
 
 
-def fhsis_input(request, url, model, data):
+def fhsis_input(request, url, model, data, barangay):
 
     if checkers.validate_fields(request) > 0:
         messages.error(request, "Please fill up all fields")
@@ -16,7 +16,7 @@ def fhsis_input(request, url, model, data):
 
     month = datetime.datetime.now().month
     year = datetime.datetime.now().year
-    fhsis = FHSIS.objects.get(date__month=month, date__year=year)
+    fhsis = FHSIS.objects.get(date__month=month, date__year=year, barangay=barangay)
 
     age_groups = AgeGroup.objects.all()
 
@@ -76,14 +76,14 @@ def encode_fhsis(request, model, url, data):
     return render(request, 'datacollection/fhsis_data_input.html', context)
 
 
-def input_fhsis(request, form, source):
+def input_fhsis(request, form, source, barangay):
 
     f = form(request.POST or None)
 
     month = datetime.datetime.now().month
     year = datetime.datetime.now().year
 
-    fhsis = FHSIS.objects.get(date__year=year, date__month=month)
+    fhsis = FHSIS.objects.get(date__year=year, date__month=month, barangay=barangay)
 
     if f.is_valid():
 

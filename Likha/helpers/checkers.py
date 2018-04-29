@@ -1,3 +1,4 @@
+
 def validate_fields(request):
 
     counter = 0
@@ -15,3 +16,10 @@ def validate_fields(request):
                 counter = counter + 1
 
     return counter
+
+
+def check_fhsis(month, year, barangay, model):
+
+    return model.objects.filter(fhsis__date__month=month,
+                                fhsis__date__year=year,
+                                fhsis__barangay=barangay).count() > 0
